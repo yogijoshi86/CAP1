@@ -1,9 +1,9 @@
 namespace app.tpcds;
 
-entity SupplierView as select from SupplierDP;
+entity SupplierView as select from SUPPLIERDP;
 
 @cds.persistence.exists
-entity SupplierDP {
+entity SUPPLIERDP {
   S_SUPPKEY : Integer;
   S_NAME  : String;
   S_ADDRESS  : String;

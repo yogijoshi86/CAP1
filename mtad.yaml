@@ -1,0 +1,71 @@
+_schema-version: "3.1"
+ID: tpcds1
+description: A simple CAP project.
+version: 1.0.0
+modules:
+- name: user_db
+  type: com.sap.xs.hdi
+  path: gen/db
+  requires:
+  - name: hana-opensap-cloud-2020-user-db
+  parameters:
+    app-name: hana-opensap-cloud-2020-user-db
+resources:
+- name: hana-opensap-cloud-2020-user-db
+  type: com.sap.xs.hdi-container
+  parameters:
+    service: hana
+    service-plan: hdi-shared
+  properties:
+    hdi-service-name: ${service-name}
+- name: hdlfcontainer
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      data:
+        fileContainer:
+          authorizations:
+          - pattern: CN=CL1,O=Internet Widgits Pty Ltd,L=Waterloo,ST=Ontario,C=CA
+            rank: 1
+            roles:
+            - user
+            - admin
+          trusts:
+          - alias: my-ca
+            certData: |-
+              -----BEGIN CERTIFICATE-----
+              MIIDpTCCAo2gAwIBAgIUKwLScWDo5IzGNsPUzvcrrsJlXVQwDQYJKoZIhvcNAQEL
+              BQAwYjELMAkGA1UEBhMCQVUxEDAOBgNVBAgMB09udGFyaW8xETAPBgNVBAcMCFdh
+              dGVybG9vMSEwHwYDVQQKDBhJbnRlcm5ldCBXaWRnaXRzIFB0eSBMdGQxCzAJBgNV
+              BAMMAllKMB4XDTIzMDMwOTAxMjU0NloXDTIzMDkyNTAxMjU0NlowYjELMAkGA1UE
+              BhMCQVUxEDAOBgNVBAgMB09udGFyaW8xETAPBgNVBAcMCFdhdGVybG9vMSEwHwYD
+              VQQKDBhJbnRlcm5ldCBXaWRnaXRzIFB0eSBMdGQxCzAJBgNVBAMMAllKMIIBIjAN
+              BgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1Q1+kaHzCPYOuAs/gv4Wr08xtjUa
+              o592E+ArTsQhdYbchhl/mbdu4H6UtWudK1HVQ2WoKhbOcm1R6rgXNUvROT1x8LUm
+              0ZSBnXeJeYp35kiUytq+5mbC8LWAbTr+Hij4oLFL0/3PgXP2FqMTN2amTaoFR8if
+              qsKBJWD8Ky5nxaS1995oJmImeVzVWOmUARDDNJm8SbwNiNCgz5aJyKER29juXdbm
+              AAFrtRC0UjC60Kk3XldvGY2gS/ks9DKPloUBAPxc9sbOrQPm86BnSk3EW1JwK0hb
+              Hwg5fmq3Qw6eFeqVptmA6gyosEc/mMwBmUpT0Vt8c6Xa8dVCi/XQVwu6qwIDAQAB
+              o1MwUTAdBgNVHQ4EFgQUTDwRILOmeQ5JbfAsWD1KZr1EKecwHwYDVR0jBBgwFoAU
+              TDwRILOmeQ5JbfAsWD1KZr1EKecwDwYDVR0TAQH/BAUwAwEB/zANBgkqhkiG9w0B
+              AQsFAAOCAQEAmBYs+Sqzkp+9EGIjkR7QZ9qW7fmGFYAoEbeCW1k9r3fKjDzewlL1
+              4CnQBUh4yogyf9PEC04CPfFzp4uKJWfStHv8c+9OGhAPkKXh5wi8Ysqr/QRRJwPa
+              6ssnFIraNyDQs64/dwJSd8mb8wjs7bpcXeGriHxhjwwVsjZWP61noqIkwf7NbXKY
+              FrIOMrVmClf+V/YaVN6m66iUVw1P7zl3AxFf6FB4+3yzPjGIQUCG+QcUAmTG0AcS
+              0pfY0MJlPfDN0QBMW6ICxpAk6tQQIDOh9QKIxN4g5eeygYeBZ4bqWvV5IFZlFG/n
+              EQB0OLCvCbQ4ZwCzVftOwOFRGJNOm61hRg==
+              -----END CERTIFICATE-----
+        iqEnabled: false
+        whitelistIPs:
+        - 0.0.0.0/0
+    service: hana-cloud
+    service-name: hdlfcontainer-srv
+    service-plan: relational-data-lake
+parameters:
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm install
+    - npx -p @sap/cds-dk cds build --production

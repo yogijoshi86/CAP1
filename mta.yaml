@@ -1,0 +1,57 @@
+_schema-version: '3.1'
+ID: tpcds1
+version: 1.0.0
+description: "A simple CAP project."
+parameters:
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm install
+        - npx -p @sap/cds-dk cds build --production
+modules:
+ # -------------------- USER DB MODULE ------------------------
+  - name: user_db
+  # ------------------------------------------------------------
+    type: hdb
+    path: gen/db
+    parameters:
+      app-name: hana-opensap-cloud-2020-user-db  
+    requires:
+     # 'hana' and 'xsuaa' resources extracted from CAP configuration
+     - name: hana-opensap-cloud-2020-user-db
+
+resources:
+ # services extracted from CAP configuration
+ # 'service-plan' can be configured via 'cds.requires.<name>.vcap.plan'
+# ------------------------------------------------------------
+  - name: hana-opensap-cloud-2020-user-db 
+ # ------------------------------------------------------------
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana  # or 'hanatrial' on trial landscapes
+      service-plan: hdi-shared
+    properties:
+      hdi-service-name: ${service-name}
+  - name: hdlfcontainer
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: hana-cloud
+      service-plan: relational-data-lake 
+      service-name: hdlfcontainer-srv
+      config:
+        data: 
+          iqEnabled: false
+          whitelistIPs: 
+          - "0.0.0.0/0"
+          fileContainer: 
+            authorizations: 
+            - pattern: "CN=CL1,O=Internet Widgits Pty Ltd,L=Waterloo,ST=Ontario,C=CA"
+              rank: 1
+              roles: 
+              - "user"
+              - "admin"
+            trusts: 
+            - alias: "my-ca"
+              certData: "-----BEGIN CERTIFICATE-----\nMIIDpTCCAo2gAwIBAgIUKwLScWDo5IzGNsPUzvcrrsJlXVQwDQYJKoZIhvcNAQEL\nBQAwYjELMAkGA1UEBhMCQVUxEDAOBgNVBAgMB09udGFyaW8xETAPBgNVBAcMCFdh\ndGVybG9vMSEwHwYDVQQKDBhJbnRlcm5ldCBXaWRnaXRzIFB0eSBMdGQxCzAJBgNV\nBAMMAllKMB4XDTIzMDMwOTAxMjU0NloXDTIzMDkyNTAxMjU0NlowYjELMAkGA1UE\nBhMCQVUxEDAOBgNVBAgMB09udGFyaW8xETAPBgNVBAcMCFdhdGVybG9vMSEwHwYD\nVQQKDBhJbnRlcm5ldCBXaWRnaXRzIFB0eSBMdGQxCzAJBgNVBAMMAllKMIIBIjAN\nBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1Q1+kaHzCPYOuAs/gv4Wr08xtjUa\no592E+ArTsQhdYbchhl/mbdu4H6UtWudK1HVQ2WoKhbOcm1R6rgXNUvROT1x8LUm\n0ZSBnXeJeYp35kiUytq+5mbC8LWAbTr+Hij4oLFL0/3PgXP2FqMTN2amTaoFR8if\nqsKBJWD8Ky5nxaS1995oJmImeVzVWOmUARDDNJm8SbwNiNCgz5aJyKER29juXdbm\nAAFrtRC0UjC60Kk3XldvGY2gS/ks9DKPloUBAPxc9sbOrQPm86BnSk3EW1JwK0hb\nHwg5fmq3Qw6eFeqVptmA6gyosEc/mMwBmUpT0Vt8c6Xa8dVCi/XQVwu6qwIDAQAB\no1MwUTAdBgNVHQ4EFgQUTDwRILOmeQ5JbfAsWD1KZr1EKecwHwYDVR0jBBgwFoAU\nTDwRILOmeQ5JbfAsWD1KZr1EKecwDwYDVR0TAQH/BAUwAwEB/zANBgkqhkiG9w0B\nAQsFAAOCAQEAmBYs+Sqzkp+9EGIjkR7QZ9qW7fmGFYAoEbeCW1k9r3fKjDzewlL1\n4CnQBUh4yogyf9PEC04CPfFzp4uKJWfStHv8c+9OGhAPkKXh5wi8Ysqr/QRRJwPa\n6ssnFIraNyDQs64/dwJSd8mb8wjs7bpcXeGriHxhjwwVsjZWP61noqIkwf7NbXKY\nFrIOMrVmClf+V/YaVN6m66iUVw1P7zl3AxFf6FB4+3yzPjGIQUCG+QcUAmTG0AcS\n0pfY0MJlPfDN0QBMW6ICxpAk6tQQIDOh9QKIxN4g5eeygYeBZ4bqWvV5IFZlFG/n\nEQB0OLCvCbQ4ZwCzVftOwOFRGJNOm61hRg==\n-----END CERTIFICATE-----"

@@ -2,8 +2,8 @@ namespace sap.hc.dpconsumer;
 
 @DeltaSharing.entity : 'schema'
 context time_attendance_reporting_schema {
-  @readonly
-  @cds.persistence.exists
+  // @readonly
+  // @cds.persistence.exists
   entity time_attendance_reporting {
     @EndUserText.label : 'Day 1'
     key _c0 : String(5000);

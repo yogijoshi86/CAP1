@@ -15,10 +15,20 @@
     "sql": {
       "native_hana_associations": false
     },
-    "cdsc": {
-      "sqlMapping": "quoted"
-    },
     "requires": {
+      "db": {
+
+        "kind": "sqlite",
+
+        "model": "*",
+
+        "credentials": {
+
+          "database": ":memory:"
+
+        }
+
+      },
       "[production]": {
         "db": "hana",
         "auth": "xsuaa",
@@ -43,6 +53,7 @@
     "@sap/xssec": "^4"
   },
   "devDependencies": {
+    "@cap-js/sqlite": "^1.7.7",
     "@sap/cds-dk": "^8",
     "rimraf": "^5.0.5"
   },

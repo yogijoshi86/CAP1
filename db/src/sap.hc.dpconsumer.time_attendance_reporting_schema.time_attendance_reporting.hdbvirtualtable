@@ -1,0 +1,2 @@
+VIRTUAL TABLE "sap.hc.dpconsumer.time_attendance_reporting_schema.time_attendance_reporting"
+AT REMOTE.TIME_ATTENDANCE_REPORTING

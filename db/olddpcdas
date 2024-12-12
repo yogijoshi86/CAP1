@@ -1,0 +1,94 @@
+namespace app.tpcds;
+
+entity employees_taking_maximum_time_off as
+  select EmployeeID from TIMEATTENDANCE where DaysTimeOff
+  = (select max(DaysTimeOff) from TIMEATTENDANCE);
+
+@cds.persistence.exists
+entity TIMEATTENDANCE {
+  @EndUserText.label : 'Employee ID'
+  key EmployeeID : String(10);
+  @EndUserText.label : 'Home/Host'
+  HomeHost : String(40);
+  @EndUserText.label : 'Father''s Name'
+  FatherName : String(40);
+  @EndUserText.label : 'Spouse''s Name'
+  SpouseName : String(40);
+  @EndUserText.label : 'Gender'
+  Gender : String(1);
+  @Semantics.date : true
+  @EndUserText.label : 'Hire Date'
+  HireDate : String(10);
+  @EndUserText.label : 'Department'
+  Department : String(40);
+  @EndUserText.label : 'Location'
+  Location : String(40);
+  @EndUserText.label : 'Campus ID'
+  CampusID : String(20);
+  @EndUserText.label : 'Day 1'
+  Day1 : String(20);
+  @EndUserText.label : 'Day 2'
+  Day2 : String(20);
+  @EndUserText.label : 'Day 3'
+  Day3 : String(20);
+  @EndUserText.label : 'Day 4'
+  Day4 : String(20);
+  @EndUserText.label : 'Day 5'
+  Day5 : String(20);
+  @EndUserText.label : 'Day 6'
+  Day6 : String(20);
+  @EndUserText.label : 'Day 7'
+  Day7 : String(20);
+  @EndUserText.label : 'Day 8'
+  Day8 : String(20);
+  @EndUserText.label : 'Day 9'
+  Day9 : String(20);
+  @EndUserText.label : 'Day 10'
+  Day10 : String(20);
+  @EndUserText.label : 'Day 11'
+  Day11 : String(20);
+  @EndUserText.label : 'Day 12'
+  Day12 : String(20);
+  @EndUserText.label : 'Day 13'
+  Day13 : String(20);
+  @EndUserText.label : 'Day 14'
+  Day14 : String(20);
+  @EndUserText.label : 'Day 15'
+  Day15 : String(20);
+  @EndUserText.label : 'Day 16'
+  Day16 : String(20);
+  @EndUserText.label : 'Day 17'
+  Day17 : String(20);
+  @EndUserText.label : 'Day 18'
+  Day18 : String(20);
+  @EndUserText.label : 'Day 19'
+  Day19 : String(20);
+  @EndUserText.label : 'Day 20'
+  Day20 : String(20);
+  @EndUserText.label : 'Day 21'
+  Day21 : String(20);
+  @EndUserText.label : 'Day 22'
+  Day22 : String(20);
+  @EndUserText.label : 'Day 23'
+  Day23 : String(20);
+  @EndUserText.label : 'Day 24'
+  Day24 : String(20);
+  @EndUserText.label : 'Day 25'
+  Day25 : String(20);
+  @EndUserText.label : 'Day 26'
+  Day26 : String(20);
+  @EndUserText.label : 'Day 27'
+  Day27 : String(20);
+  @EndUserText.label : 'Day 28'
+  Day28 : String(20);
+  @EndUserText.label : 'Day 29'
+  Day29 : String(20);
+  @EndUserText.label : 'Day 30'
+  Day30 : String(20);
+  @EndUserText.label : 'Day 31'
+  Day31 : String(20);
+  @EndUserText.label : 'Number of Days Time Off'
+  DaysTimeOff : Integer;
+  @EndUserText.label : 'Number of Days on Leave'
+  DaysLoA : Integer;
+};

@@ -1,0 +1,8 @@
+{
+    "DATAPRODUCT_MODEL_SCHEMA1_DP" : {
+        "target": {
+            "schema"     : "DBADMIN",
+            "object"     : "VTTEST"
+        }
+    }
+}

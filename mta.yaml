@@ -7,7 +7,7 @@ modules:
     type: nodejs
     path: gen/srv
     requires:
-      - name: dp-consumer-db
+      - name: dp-consumer-dbx
       - name: dp-consumer-auth
     provides:
       - name: srv-api
@@ -19,11 +19,11 @@ modules:
       readiness-health-check-type: http
     build-parameters:
       builder: npm
-  - name: dp-consumer-db-deployer
+  - name: dp-consumer-dbx-deployer
     type: hdb
     path: gen/db
     requires:
-      - name: dp-consumer-db
+      - name: dp-consumer-dbx
       - name: hdi_grantor
     parameters:
       buildpack: nodejs_buildpack
@@ -74,11 +74,13 @@ modules:
       supported-platforms:
         []
 resources:
-  - name: dp-consumer-db
+  - name: dp-consumer-dbx
     type: com.sap.xs.hdi-container
     parameters:
       service: hana
       service-plan: hdi-shared
+      config:
+        database_id : d51dfc4c-c0e4-4c02-a269-aa842e8d0793
   - name: dp-consumer-auth
     type: org.cloudfoundry.managed-service
     parameters:

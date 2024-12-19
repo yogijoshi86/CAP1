@@ -1,11 +1,10 @@
-namespace sap.hc.dpconsumer;
+namespace dataproduct.model;
 
 @DeltaSharing.entity : 'schema'
-context time_attendance_reporting_schema {
+context schema1 {
   @readonly
   @cds.persistence.exists
-  @cds.dp.dpID : 'sap:sf:dataProduct:time_attendance_reporting:v1'
-  entity time_attendance_reporting {
+  entity dp {
     @EndUserText.label : 'Day 1'
     key _c0 : String(5000);
     @EndUserText.label : 'Day 2'

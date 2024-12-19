@@ -3,4 +3,4 @@ VIEW "time.time_attendance_reporting" AS SELECT
   "time_attendance_reporting_0"."_c1" AS DAY2,
   "time_attendance_reporting_0"."_c2" AS DAY3,
   "time_attendance_reporting_0"."_c3" AS DAY4
-FROM "sap.hc.dpconsumer.time_attendance_reporting_schema.time_attendance_reporting" AS "time_attendance_reporting_0"
+FROM "DATAPRODUCT_MODEL_SCHEMA1_DP" AS "time_attendance_reporting_0"
